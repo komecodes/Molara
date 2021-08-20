@@ -49,10 +49,16 @@ function getInputAndDescription(event) {
         if (localStorage.getItem("allSavedInputs")) {
           allSavedInputs = JSON.parse(localStorage.getItem("allSavedInputs"));
           allSavedInputs.push(inputObject);
-          localStorage.setItem("allSavedInputs", JSON.stringify(allSavedInputs));
+          localStorage.setItem(
+            "allSavedInputs",
+            JSON.stringify(allSavedInputs)
+          );
         } else {
           allSavedInputs.push(inputObject);
-          localStorage.setItem("allSavedInputs", JSON.stringify(allSavedInputs));
+          localStorage.setItem(
+            "allSavedInputs",
+            JSON.stringify(allSavedInputs)
+          );
         }
         renderInput();
       }
@@ -63,7 +69,19 @@ function getInputAndDescription(event) {
 function renderInput() {
   let input = "";
   for (let i = 0; i < allSavedInputs.length; i++) {
-    input += `<tr><td colspan="1" class = "bolded-font">${allSavedInputs[i].input}</td><td>${allSavedInputs[i].description}</td></tr>`;
-    savedInputContainer.innerHTML=input;
+    let urlInput = allSavedInputs[i].input;
+    console.log(urlInput);
+    if (
+      urlInput.includes("http") ||
+      urlInput.includes("www")
+    ) {
+      if (urlInput.includes("www.")) {
+                
+      }
+      input += `<tr><td colspan="1" class = "bolded-font"><a href = "${allSavedInputs[i].input}" target="_blank"> ${allSavedInputs[i].input}</a></td><td>${allSavedInputs[i].description}</td></tr>`;
+    } else {
+      input += `<tr><td colspan="1" class = "bolded-font">${allSavedInputs[i].input}</td><td>${allSavedInputs[i].description}</td></tr>`;
+    }
+    savedInputContainer.innerHTML = input;
   }
 }
