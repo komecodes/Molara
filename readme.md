@@ -23,7 +23,7 @@ I wrote my first .includes string method and I am currently learning RegEx becau
 - Get User's input and save to general dumping folder in local storage ✅
 - Render the saved inputs.✅
 - If input is a url, call a different render function that should wrap an anchor tag around it and style the anchor tag's text as lowercase or just add a conditional statement to curent render function. Achieve this by checking the first 4 letters of the string inputted and check it is contains http, https or www. ✅
-- If user input contains "www.", replace the "www." in the string to "https://" so that the href attribute can work. ♻️
+- If user input contains "www.", replace the "www." in the string to "https://" so that the href attribute can work. ✅
 - Implement a more options button for every input. It should have two options; delete and save/move to folder.
 - The move to folder button on click/hover should list all folders in two dropdown options; bookmark folders and custom folders. If any of the options is selected, the folders created for that category will be displayed. (Implement some spin/transition animation thing here).
 - Save to folder button should work a bit similar to the "move to folder" button above.

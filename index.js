@@ -14,7 +14,6 @@ let allSavedInputs = []; //general dumping folder
 let inputsFromLocalStorage = JSON.parse(localStorage.getItem("allSavedInputs"));
 
 if (inputsFromLocalStorage) {
-  console.log(inputsFromLocalStorage);
   allSavedInputs = inputsFromLocalStorage;
   renderInput();
 }
@@ -29,12 +28,9 @@ function getInputAndDescription(event) {
   event.preventDefault();
   if (userInputField.value) {
     userInput = userInputField.value;
-    // check if input is a link and wrap anchor tag around it later
-    // When rendering from local storage, also check if the input is a link and remember to wrap around anchor tag
     inputForm.reset();
     descriptionsContainer.style.display = "block";
     descriptionInputField.focus();
-    console.log(userInput);
     descriptionForm.addEventListener("submit", (event) => {
       event.preventDefault();
       if (descriptionInputField.value) {
@@ -67,18 +63,27 @@ function getInputAndDescription(event) {
 }
 
 function renderInput() {
+  // takes the array of inputobjects and render each object's keys (input and description) in the table cells
   let input = "";
   for (let i = 0; i < allSavedInputs.length; i++) {
-    let urlInput = allSavedInputs[i].input;
+
+      // When rendering from local storage, also check if the input is a link and remember to wrap around anchor tag
+
+    let urlInput = allSavedInputs[i].input; //saving the input key for the array item (which is an object) in a new variable
+    let urlwwwRegEx = /^www./i;
+    let urlhttpRegEx = /^http/i;
     console.log(urlInput);
     if (
-      urlInput.includes("http") ||
-      urlInput.includes("www")
+      urlwwwRegEx.test(urlInput) ||urlhttpRegEx.test(urlInput)
     ) {
-      if (urlInput.includes("www.")) {
-                
+      if (urlwwwRegEx.test(urlInput)) {
+        let newUrl = urlInput.replace(urlwwwRegEx, "https://"); //saving the input key for the array item (which is an object) in a new variable after replacing the www. with https://
+        
+        input += `<tr><td colspan="1" class = "bolded-font"><a href = "${newUrl}" target="_blank"> ${newUrl}</a></td><td>${allSavedInputs[i].description}</td></tr>`;
       }
-      input += `<tr><td colspan="1" class = "bolded-font"><a href = "${allSavedInputs[i].input}" target="_blank"> ${allSavedInputs[i].input}</a></td><td>${allSavedInputs[i].description}</td></tr>`;
+      else{
+        input += `<tr><td colspan="1" class = "bolded-font"><a href = "${urlInput}" target="_blank"> ${urlInput}</a></td><td>${allSavedInputs[i].description}</td></tr>`;
+      }
     } else {
       input += `<tr><td colspan="1" class = "bolded-font">${allSavedInputs[i].input}</td><td>${allSavedInputs[i].description}</td></tr>`;
     }
